@@ -1,0 +1,139 @@
+{
+  "domain": "UCL",
+  "vdu": [
+    {
+      "resource_requirements": {
+        "network_interface_bandwidth_unit": "",
+        "hypervisor_parameters": {
+          "version": "10002|12001|2.6.32-358.el6.x86_64",
+          "type": "QEMU-KVM"
+        },
+        "memory_unit": "GB",
+        "network_interface_card_capabilities": {
+          "SR-IOV": true,
+          "mirroring": false
+        },
+        "storage": {
+          "size_unit": "GB",
+          "persistence": false,
+          "size": 1
+        },
+        "network_interface_bandwidth": "",
+        "platform_pcie_parameters": {
+          "SR-IOV": true,
+          "device_pass_through": true
+        },
+        "vcpus": 1,
+        "vswitch_capabilities": {
+          "version": "2.0",
+          "type": "ovs",
+          "overlay_tunnel": "GRE"
+        },
+        "data_processing_acceleration_library": "",
+        "memory": 1,
+        "memory_parameters": {
+          "large_pages_required": false,
+          "numa_allocation_policy": ""
+        },
+        "cpu_support_accelerator": "AES-NI"
+      },
+      "alias": "mock:cache",
+      "variables": "VARIABLE1=value1\nVARIABLE2=value2",
+      "networking_resources": "",
+      "monitoring_parameters_specific": [],
+      "wc_notify": false,
+      "vm_image": "http://nfs:8080/NFS/files/dummy_image.qcow2",
+      "controller": true,
+      "connection_points": [
+        {
+          "vlink_ref": "vl0",
+          "id": "CPwbei"
+        }
+      ],
+      "vm_image_format": "qcow2",
+      "monitoring_parameters": [],
+      "scale_in_out": {
+        "minimum": 1,
+        "maximum": 1
+      },
+      "vm_image_md5": "1276481102f218c981e0324180bafd9f",
+      "id": "vdu0"
+    }
+  ],
+  "name": "fake_VNF",
+  "created_at": "2017-11-14T13:18:23Z",
+  "modified_at": "2017-11-14T13:18:23Z",
+  "provider_id": 4,
+  "vlinks": [
+    {
+      "leaf_requirement": "1Gbps",
+      "connectivity_type": "E-LINE",
+      "vdu_reference": [
+        "vdu0"
+      ],
+      "alias": "99",
+      "connection_points_reference": [
+        "CPwbei"
+      ],
+      "access": true,
+      "external_access": true,
+      "dhcp": false,
+      "root_requirement": "1Gbps",
+      "port_security_enabled": false,
+      "id": "vl0"
+    }
+  ],
+  "descriptor_version": "1",
+  "deployment_flavours": [
+    {
+      "vdu_reference": [
+        "vdu0"
+      ],
+      "constraint": "",
+      "flavour_key": "gold",
+      "vlink_reference": [
+        "vl0"
+      ],
+      "id": "flavor0",
+      "assurance_parameters": []
+    }
+  ],
+  "version": "1",
+  "vnf_lifecycle_events": [
+    {
+      "authentication_username": "vagrant",
+      "driver": "http",
+      "authentication_type": "HTTPBasicAuth",
+      "authentication": "",
+      "vnf_container": "/home/vagrant/container/",
+      "events": {
+        "start": {
+          "command": "/home/vagrant/scripts/start",
+          "template_file": "{\"controller\":\"get_attr[vdu0,PublicIp]\", \"vdu0\":\"get_attr[vdu1,PublicIp]\"}",
+          "template_file_format": "JSON"
+        },
+        "stop": {
+          "command": "/home/vagrant/scripts/stop",
+          "template_file": "{}",
+          "template_file_format": "JSON"
+        }
+      },
+      "flavor_id_ref": "flavor0"
+    }
+  ],
+  "billing_model": {
+    "price": {
+      "setup": 1,
+      "max_per_period": 1,
+      "min_per_period": 1,
+      "unit": "EUR"
+    },
+    "model": "PAYG",
+    "period": "P1D"
+  },
+  "provider": "5GEX",
+  "release": "5GEx",
+  "type": "fakeVNF",
+  "ImageType": "openstack",
+  "description": "fake VNF"
+}
