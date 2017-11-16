@@ -1,9 +1,10 @@
 #!/usr/bin/python
 
 import json
+import random
 
 
-def generate_vnffgd(ingress, egress, vnf_port, nfs_number, domain, provider_id):
+def generate_vnffgd(ingress, egress, vnfds, nfs_number):
     vnffgd = {}
 
     vnffgd['vnffgs']=[]
@@ -13,10 +14,8 @@ def generate_vnffgd(ingress, egress, vnf_port, nfs_number, domain, provider_id):
     vnffgs['number_of_virtual_links'] = nfs_number+1
     vnffgs['dependent_virtual_links'] = []
 
-    i=0
-    while i<=nfs_number:
+    for i in xrange(nfs_number+1):    
           vnffgs['dependent_virtual_links'].append('vld'+str(i))
-          i+=1
 
     network_forwarding_path = {}
     network_forwarding_path['nfp_id'] = 'nfp0'
@@ -25,25 +24,35 @@ def generate_vnffgd(ingress, egress, vnf_port, nfs_number, domain, provider_id):
     network_forwarding_path['connection_points'] = []
     network_forwarding_path['connection_points'].append('ns_ext_' + ingress)
 
-    vnfds = 'domain#' + domain + ':vnf#' + str(provider_id)
-    network_forwarding_path['connection_points'].append(vnfds + '-' + str(0) + ':ext_' + str(vnf_port))
+    vnfd_index = random.randint(0, len(vnfds)-1)
+    vnfd = vnfds[vnfd_index]
 
-    i=0
-    while i<nfs_number-1:
-          network_forwarding_path['connection_points'].append(vnfds + '-' + str(i) + ':ext_' + str(vnf_port))
-          network_forwarding_path['connection_points'].append(vnfds + '-' + str(i+1) + ':ext_' + str(vnf_port))
-          i+=1
-         
+    network_forwarding_path['connection_points'].append(vnfd['vnfid'] + '-' + str(vnfd['instances']) + ':ext_' + str(vnfd['port']))
+
+    for i in xrange(nfs_number-1):
+          # using previous instance and port
+          network_forwarding_path['connection_points'].append(vnfd['vnfid'] + '-' + str(vnfd['instances']) + ':ext_' + str(vnfd['port']))
+          # incrementing the instance id
+          vnfds[vnfd_index]['instances']+=1
+          # picking a new VNFD
+          vnfd_index = random.randint(0, len(vnfds)-1)
+          vnfd = vnfds[vnfd_index]
+          network_forwarding_path['connection_points'].append(vnfd['vnfid'] + '-' + str(vnfd['instances']) + ':ext_' + str(vnfd['port']))
+
     network_forwarding_path['connection_points'].append('ns_ext_' + egress)
-    network_forwarding_path['connection_points'].append(vnfds + '-' + str(nfs_number-1) + ':ext_' + str(vnf_port))     
-
+    network_forwarding_path['connection_points'].append(vnfd['vnfid'] + '-' + str(vnfd['instances']) + ':ext_' + str(vnfd['port']))
+    vnfds[vnfd_index]['instances']+=1
+    
     constituent_vnfs = []
-    i=0
-    while i<nfs_number:
-          vnf = {'vnf_ref_id' : str(provider_id) + '@' + domain + '-' + str(i),
-                 'vnf_flavor_key_ref': 'gold'}
-          constituent_vnfs.append(vnf)
-          i+=1
+
+    for vnfd in vnfds:
+        domain = vnfd['vnfid'].split(':')[0].split('#')[1]
+        vnf_id = vnfd['vnfid'].split(':')[1].split('#')[1]
+
+        for instance in xrange(vnfd['instances']):    
+            vnf = {'vnf_ref_id' : str(vnf_id) + '@' + domain + '-' + str(instance),
+                   'vnf_flavor_key_ref': 'gold'}
+            constituent_vnfs.append(vnf)
 
     network_forwarding_path['constituent_vnfs'] = constituent_vnfs
 
@@ -56,30 +65,31 @@ def generate_vnffgd(ingress, egress, vnf_port, nfs_number, domain, provider_id):
 
 
 
-def generate_vlds(ingress, egress, vnf_port, nfs_number, domain, provider_id):
+def generate_vlds(vnffg, ingress, egress):
     vld = {}
     vld['number_of_endpoints'] = 0
 
-    i=0
     virtual_links = []
     
-    while i<=nfs_number:
+    vl_ids = vnffg['network_forwarding_path'][0]['graph']
+    conn_points = vnffg['network_forwarding_path'][0]['connection_points']
+
+    for i, vl_id in enumerate(vl_ids):
           vl = {}
-          vl['vld_id'] = 'vld' + str(i)
+          vl['vld_id'] = vl_id
           if i==0:
              vl['alias'] = ingress
              vl['external_access'] = True
-             connections = ['domain#' + domain + ':vnf#' + str(provider_id) + '-' + str(i) + ':ext_' + vnf_port]
-          elif i==nfs_number:
+             connections = [conn_points[1]]
+          elif i==len(vl_ids)-1:
              vl['alias'] = egress
              vl['external_access'] = True
-             connections = ['domain#' + domain + ':vnf#' + str(provider_id) + '-' + str(i-1) + ':ext_' + vnf_port]
+             connections = [conn_points[len(conn_points)-1]]
           else:
              vl['alias'] = 'internal'
              vl['external_access'] = False
-             connections = ['domain#' + domain + ':vnf#' + str(provider_id) + '-' + str(i-1) + ':ext_' + vnf_port,
-                            'domain#' + domain + ':vnf#' + str(provider_id) + '-' + str(i) + ':ext_' + vnf_port]
-          
+             connections = [conn_points[(i*2)], conn_points[(i*2)+1]]
+         
           vl['connections'] = connections   
           vl['root_requirements'] =  '10Mbps'
           vl['leaf_requirement'] = '10Mbps'
@@ -97,14 +107,25 @@ def generate_vlds(ingress, egress, vnf_port, nfs_number, domain, provider_id):
           vl['sla_ref_id'] = 'sla0'
 
           virtual_links.append(vl)
-          i+=1
 
     vld['virtual_links'] = virtual_links
 
     return vld
 
                                                                                                                         
-def generate_sla(nfs_number, domain, provider_id):
+def generate_sla(vnfds):
+
+    constituent_vnf = []
+    for vnfd in vnfds:
+        domain = vnfd['vnfid'].split(':')[0].split('#')[1]
+        vnf_id = vnfd['vnfid'].split(':')[1].split('#')[1]
+        vnf_info = {}
+        vnf_info['number_of_instances'] = vnfd['instances']
+        vnf_info['redundancy_model'] = 'Active'
+        vnf_info['vnf_flavour_id_reference'] = 'gold'
+        vnf_info['vnf_reference'] = vnf_id + '@' + domain
+        constituent_vnf.append(vnf_info)
+
     sla = [ {'id': 'sla0',
              'assurance_parameters': [],
              'billing': {'model': 'PAYG',
@@ -113,24 +134,20 @@ def generate_sla(nfs_number, domain, provider_id):
                                    'unit': 'EUR'
                                   }
                         },
-             'constituent_vnf' : [ {'number_of_instances' : nfs_number,
-                                    'redundancy_model' : 'Active',
-                                    'vnf_flavour_id_reference': 'gold',
-                                    'vnf_reference' : str(provider_id) + '@' + domain
-                                   } ], 
+             'constituent_vnf' : constituent_vnf,
              'sla_key' : 'basic' 
              } ]
 
     return sla
 
 
-def generate_nsd(ns_id, ns_name, vnfds, vnf_number, domain, provider_id, ingress, egress, vnf_port):
+def generate_nsd(ns_id, ns_name, vnfds, vnf_number, ingress, egress):
     nsd = {
            'id' : ns_id,
            'name' : ns_name,
            'vendor' : "3",
            'version' : "1",
-           'vnfds' : vnfds,
+           'vnfds' : [vnfd['vnfid'] for vnfd in vnfds],
            'lifecycle_events' : {
                                  'start' : [],
                                  'stop' : [],
@@ -162,13 +179,14 @@ def generate_nsd(ns_id, ns_name, vnfds, vnf_number, domain, provider_id, ingress
            'vnf_dependency' : []
           }
     
-    vnffgd = generate_vnffgd(ingress, egress, vnf_port, vnf_number, domain, provider_id)
+    vnffgd = generate_vnffgd(ingress, egress, vnfds, vnf_number)
     nsd['vnffgd'] = vnffgd
 
-    vld = generate_vlds(ingress, egress, vnf_port, vnf_number, domain, provider_id)
+    vld = generate_vlds(vnffgd['vnffgs'][0], ingress, egress)
+
     nsd['vld'] = vld
 
-    sla = generate_sla(vnf_number, domain, provider_id)
+    sla = generate_sla(vnfds)
     nsd['sla'] = sla
 
     nsd['auto_scale_policy'] = {'criteria': [],
@@ -188,12 +206,19 @@ def generate_nsd(ns_id, ns_name, vnfds, vnf_number, domain, provider_id, ingress
 
 if __name__ == '__main__':
 
-   domain = 'UCL'
-   provider_id = '4'
-   ingress = 'SAP0:in'
-   egress = 'SAP1:out'
-   vnf_port_id = '99'
-   nf_instances = 100
+   #vnfds_conf = [ {'domain': 'UCL', 'id' : '4', 'port' : '99'},
+   #               {'domain': 'UCL', 'id' : '5', 'port' : '99'},
+   #               {'domain': 'UCL', 'id' : '6', 'port' : '54'} ]
 
-   vnfds = ['domain#'+ domain + ':vnf#' + provider_id]
-   generate_nsd('myID', 'myName', vnfds, nf_instances, domain, provider_id, ingress, egress, vnf_port_id)
+   vnfds_conf = [ {'domain': 'UCL', 'id' : '4', 'port' : '99'},
+                  {'domain': 'UCL', 'id' : '5', 'port' : '99'} ]
+
+   ingress = 'SAP0'
+   egress = 'SAP1'
+   nf_instances = 9
+
+   vnfds = []
+   for vnfd in vnfds_conf:
+       vnfds.append({'vnfid' : 'domain#'+ vnfd['domain'] + ':vnf#' + vnfd['id'], 'port' : vnfd['port'], 'instances' : 0})
+   
+   generate_nsd('myID', 'myName', vnfds, nf_instances, ingress + ':in', egress + ':out')
