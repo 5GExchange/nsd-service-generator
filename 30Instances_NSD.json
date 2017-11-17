@@ -1,0 +1,1003 @@
+{
+    "nsd": {
+        "auto_scale_policy": {
+            "basic": [], 
+            "criteria": []
+        }, 
+        "connection_points": [], 
+        "description": "test NSD", 
+        "descriptor_version": "1", 
+        "lifecycle_events": {
+            "scale_in": [], 
+            "scale_out": [], 
+            "start": [], 
+            "stop": []
+        }, 
+        "monitoring_parameters": [
+            {
+                "desc": "Memory consumed", 
+                "metric": "mem_used", 
+                "unit": "Bytes"
+            }, 
+            {
+                "desc": "Memory consumed", 
+                "metric": "mem_percent", 
+                "unit": "%"
+            }, 
+            {
+                "desc": "CPU", 
+                "metric": "cpu_percent", 
+                "unit": "%"
+            }, 
+            {
+                "desc": "Bytes transmitted", 
+                "metric": "tx_bytes", 
+                "unit": "Bytes"
+            }, 
+            {
+                "desc": "Bytes received", 
+                "metric": "rx_bytes", 
+                "unit": "Bytes"
+            }
+        ], 
+        "name": "30Instances_NSD", 
+        "provider": "5GEx", 
+        "provider_id": "3", 
+        "sla": [
+            {
+                "assurance_parameters": [], 
+                "billing": {
+                    "model": "PAYG", 
+                    "price": {
+                        "price_per_period": 1, 
+                        "setup": 1, 
+                        "unit": "EUR"
+                    }
+                }, 
+                "constituent_vnf": [
+                    {
+                        "number_of_instances": 16, 
+                        "redundancy_model": "Active", 
+                        "vnf_flavour_id_reference": "gold", 
+                        "vnf_reference": "4@UCL"
+                    }, 
+                    {
+                        "number_of_instances": 14, 
+                        "redundancy_model": "Active", 
+                        "vnf_flavour_id_reference": "gold", 
+                        "vnf_reference": "5@UCL"
+                    }
+                ], 
+                "id": "sla0", 
+                "sla_key": "basic"
+            }
+        ], 
+        "vendor": "3", 
+        "version": "1", 
+        "vld": {
+            "number_of_endpoints": 0, 
+            "virtual_links": [
+                {
+                    "alias": "SAP0:in", 
+                    "connections": [
+                        "domain#UCL:vnf#5-0:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": true, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld0"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#5-0:ext_99", 
+                        "domain#UCL:vnf#5-1:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld1"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#5-1:ext_99", 
+                        "domain#UCL:vnf#4-0:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld2"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#4-0:ext_99", 
+                        "domain#UCL:vnf#5-2:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld3"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#5-2:ext_99", 
+                        "domain#UCL:vnf#4-1:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld4"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#4-1:ext_99", 
+                        "domain#UCL:vnf#4-2:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld5"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#4-2:ext_99", 
+                        "domain#UCL:vnf#4-3:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld6"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#4-3:ext_99", 
+                        "domain#UCL:vnf#5-3:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld7"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#5-3:ext_99", 
+                        "domain#UCL:vnf#5-4:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld8"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#5-4:ext_99", 
+                        "domain#UCL:vnf#4-4:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld9"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#4-4:ext_99", 
+                        "domain#UCL:vnf#4-5:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld10"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#4-5:ext_99", 
+                        "domain#UCL:vnf#4-6:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld11"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#4-6:ext_99", 
+                        "domain#UCL:vnf#4-7:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld12"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#4-7:ext_99", 
+                        "domain#UCL:vnf#4-8:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld13"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#4-8:ext_99", 
+                        "domain#UCL:vnf#5-5:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld14"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#5-5:ext_99", 
+                        "domain#UCL:vnf#4-9:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld15"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#4-9:ext_99", 
+                        "domain#UCL:vnf#5-6:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld16"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#5-6:ext_99", 
+                        "domain#UCL:vnf#4-10:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld17"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#4-10:ext_99", 
+                        "domain#UCL:vnf#4-11:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld18"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#4-11:ext_99", 
+                        "domain#UCL:vnf#5-7:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld19"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#5-7:ext_99", 
+                        "domain#UCL:vnf#5-8:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld20"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#5-8:ext_99", 
+                        "domain#UCL:vnf#4-12:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld21"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#4-12:ext_99", 
+                        "domain#UCL:vnf#4-13:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld22"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#4-13:ext_99", 
+                        "domain#UCL:vnf#5-9:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld23"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#5-9:ext_99", 
+                        "domain#UCL:vnf#4-14:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld24"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#4-14:ext_99", 
+                        "domain#UCL:vnf#5-10:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld25"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#5-10:ext_99", 
+                        "domain#UCL:vnf#5-11:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld26"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#5-11:ext_99", 
+                        "domain#UCL:vnf#5-12:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld27"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#5-12:ext_99", 
+                        "domain#UCL:vnf#4-15:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld28"
+                }, 
+                {
+                    "alias": "internal", 
+                    "connections": [
+                        "domain#UCL:vnf#4-15:ext_99", 
+                        "domain#UCL:vnf#5-13:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": false, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld29"
+                }, 
+                {
+                    "alias": "SAP1:out", 
+                    "connections": [
+                        "domain#UCL:vnf#5-13:ext_99"
+                    ], 
+                    "connectivity_type": "E-LINE", 
+                    "external_access": true, 
+                    "leaf_requirement": "10Mbps", 
+                    "merge": false, 
+                    "qos": {
+                        "burst": "", 
+                        "delay": "", 
+                        "flowclass": "", 
+                        "params": "", 
+                        "peak": ""
+                    }, 
+                    "root_requirements": "10Mbps", 
+                    "sla_ref_id": "sla0", 
+                    "vld_id": "vld30"
+                }
+            ]
+        }, 
+        "vnf_dependency": [], 
+        "vnfds": [
+            "domain#UCL:vnf#4", 
+            "domain#UCL:vnf#5"
+        ], 
+        "vnffgd": {
+            "vnffgs": [
+                {
+                    "dependent_virtual_links": [
+                        "vld0", 
+                        "vld1", 
+                        "vld2", 
+                        "vld3", 
+                        "vld4", 
+                        "vld5", 
+                        "vld6", 
+                        "vld7", 
+                        "vld8", 
+                        "vld9", 
+                        "vld10", 
+                        "vld11", 
+                        "vld12", 
+                        "vld13", 
+                        "vld14", 
+                        "vld15", 
+                        "vld16", 
+                        "vld17", 
+                        "vld18", 
+                        "vld19", 
+                        "vld20", 
+                        "vld21", 
+                        "vld22", 
+                        "vld23", 
+                        "vld24", 
+                        "vld25", 
+                        "vld26", 
+                        "vld27", 
+                        "vld28", 
+                        "vld29", 
+                        "vld30"
+                    ], 
+                    "network_forwarding_path": [
+                        {
+                            "connection_points": [
+                                "ns_ext_SAP0:in", 
+                                "domain#UCL:vnf#5-0:ext_99", 
+                                "domain#UCL:vnf#5-0:ext_99", 
+                                "domain#UCL:vnf#5-1:ext_99", 
+                                "domain#UCL:vnf#5-1:ext_99", 
+                                "domain#UCL:vnf#4-0:ext_99", 
+                                "domain#UCL:vnf#4-0:ext_99", 
+                                "domain#UCL:vnf#5-2:ext_99", 
+                                "domain#UCL:vnf#5-2:ext_99", 
+                                "domain#UCL:vnf#4-1:ext_99", 
+                                "domain#UCL:vnf#4-1:ext_99", 
+                                "domain#UCL:vnf#4-2:ext_99", 
+                                "domain#UCL:vnf#4-2:ext_99", 
+                                "domain#UCL:vnf#4-3:ext_99", 
+                                "domain#UCL:vnf#4-3:ext_99", 
+                                "domain#UCL:vnf#5-3:ext_99", 
+                                "domain#UCL:vnf#5-3:ext_99", 
+                                "domain#UCL:vnf#5-4:ext_99", 
+                                "domain#UCL:vnf#5-4:ext_99", 
+                                "domain#UCL:vnf#4-4:ext_99", 
+                                "domain#UCL:vnf#4-4:ext_99", 
+                                "domain#UCL:vnf#4-5:ext_99", 
+                                "domain#UCL:vnf#4-5:ext_99", 
+                                "domain#UCL:vnf#4-6:ext_99", 
+                                "domain#UCL:vnf#4-6:ext_99", 
+                                "domain#UCL:vnf#4-7:ext_99", 
+                                "domain#UCL:vnf#4-7:ext_99", 
+                                "domain#UCL:vnf#4-8:ext_99", 
+                                "domain#UCL:vnf#4-8:ext_99", 
+                                "domain#UCL:vnf#5-5:ext_99", 
+                                "domain#UCL:vnf#5-5:ext_99", 
+                                "domain#UCL:vnf#4-9:ext_99", 
+                                "domain#UCL:vnf#4-9:ext_99", 
+                                "domain#UCL:vnf#5-6:ext_99", 
+                                "domain#UCL:vnf#5-6:ext_99", 
+                                "domain#UCL:vnf#4-10:ext_99", 
+                                "domain#UCL:vnf#4-10:ext_99", 
+                                "domain#UCL:vnf#4-11:ext_99", 
+                                "domain#UCL:vnf#4-11:ext_99", 
+                                "domain#UCL:vnf#5-7:ext_99", 
+                                "domain#UCL:vnf#5-7:ext_99", 
+                                "domain#UCL:vnf#5-8:ext_99", 
+                                "domain#UCL:vnf#5-8:ext_99", 
+                                "domain#UCL:vnf#4-12:ext_99", 
+                                "domain#UCL:vnf#4-12:ext_99", 
+                                "domain#UCL:vnf#4-13:ext_99", 
+                                "domain#UCL:vnf#4-13:ext_99", 
+                                "domain#UCL:vnf#5-9:ext_99", 
+                                "domain#UCL:vnf#5-9:ext_99", 
+                                "domain#UCL:vnf#4-14:ext_99", 
+                                "domain#UCL:vnf#4-14:ext_99", 
+                                "domain#UCL:vnf#5-10:ext_99", 
+                                "domain#UCL:vnf#5-10:ext_99", 
+                                "domain#UCL:vnf#5-11:ext_99", 
+                                "domain#UCL:vnf#5-11:ext_99", 
+                                "domain#UCL:vnf#5-12:ext_99", 
+                                "domain#UCL:vnf#5-12:ext_99", 
+                                "domain#UCL:vnf#4-15:ext_99", 
+                                "domain#UCL:vnf#4-15:ext_99", 
+                                "domain#UCL:vnf#5-13:ext_99", 
+                                "ns_ext_SAP1:out", 
+                                "domain#UCL:vnf#5-13:ext_99"
+                            ], 
+                            "constituent_vnfs": [
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "4@UCL-0"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "4@UCL-1"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "4@UCL-2"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "4@UCL-3"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "4@UCL-4"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "4@UCL-5"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "4@UCL-6"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "4@UCL-7"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "4@UCL-8"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "4@UCL-9"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "4@UCL-10"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "4@UCL-11"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "4@UCL-12"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "4@UCL-13"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "4@UCL-14"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "4@UCL-15"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "5@UCL-0"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "5@UCL-1"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "5@UCL-2"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "5@UCL-3"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "5@UCL-4"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "5@UCL-5"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "5@UCL-6"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "5@UCL-7"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "5@UCL-8"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "5@UCL-9"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "5@UCL-10"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "5@UCL-11"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "5@UCL-12"
+                                }, 
+                                {
+                                    "vnf_flavor_key_ref": "gold", 
+                                    "vnf_ref_id": "5@UCL-13"
+                                }
+                            ], 
+                            "graph": [
+                                "vld0", 
+                                "vld1", 
+                                "vld2", 
+                                "vld3", 
+                                "vld4", 
+                                "vld5", 
+                                "vld6", 
+                                "vld7", 
+                                "vld8", 
+                                "vld9", 
+                                "vld10", 
+                                "vld11", 
+                                "vld12", 
+                                "vld13", 
+                                "vld14", 
+                                "vld15", 
+                                "vld16", 
+                                "vld17", 
+                                "vld18", 
+                                "vld19", 
+                                "vld20", 
+                                "vld21", 
+                                "vld22", 
+                                "vld23", 
+                                "vld24", 
+                                "vld25", 
+                                "vld26", 
+                                "vld27", 
+                                "vld28", 
+                                "vld29", 
+                                "vld30"
+                            ], 
+                            "nfp_id": "nfp0"
+                        }
+                    ], 
+                    "number_of_endpoints": 30, 
+                    "number_of_virtual_links": 31, 
+                    "vnffg_id": "vnffg0"
+                }
+            ]
+        }
+    }
+}

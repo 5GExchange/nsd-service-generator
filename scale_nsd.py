@@ -141,9 +141,8 @@ def generate_sla(vnfds):
     return sla
 
 
-def generate_nsd(ns_id, ns_name, vnfds, vnf_number, ingress, egress):
+def generate_nsd(ns_name, vnfds, vnf_number, ingress, egress):
     nsd = {
-           'id' : ns_id,
            'name' : ns_name,
            'vendor' : "3",
            'version' : "1",
@@ -200,8 +199,10 @@ def generate_nsd(ns_id, ns_name, vnfds, vnf_number, ingress, egress):
     descriptor = {}
     descriptor['nsd'] = nsd
 
-    print json.dumps(descriptor, sort_keys=True, indent=4) 
-   
+    jnsd = json.dumps(descriptor, sort_keys=True, indent=4) 
+    f = open(ns_name + '.json', 'w')
+    f.write(jnsd)
+    #print jnsd   
 
 
 if __name__ == '__main__':
@@ -215,10 +216,11 @@ if __name__ == '__main__':
 
    ingress = 'SAP0'
    egress = 'SAP1'
-   nf_instances = 9
+   nf_instances = 30
+   service_name = '30Instances_NSD'
 
    vnfds = []
    for vnfd in vnfds_conf:
        vnfds.append({'vnfid' : 'domain#'+ vnfd['domain'] + ':vnf#' + vnfd['id'], 'port' : vnfd['port'], 'instances' : 0})
    
-   generate_nsd('myID', 'myName', vnfds, nf_instances, ingress + ':in', egress + ':out')
+   generate_nsd(service_name, vnfds, nf_instances, ingress + ':in', egress + ':out')

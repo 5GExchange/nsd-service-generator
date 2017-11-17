@@ -1,6 +1,6 @@
 #### Usage
-Create a dict in the python script according to the VNFDs to be included in the NSD. Please note that the VNFDs have to already be onboarded in the MarketPlace.
-Please fill in the fields according to the information in each VNFD (i.e., domain, vnf_id and alias of the port):
+Create a dict in the python script according to the VNFDs to be referenced in the NSD. Please note that the VNFDs have to already be onboarded in the MarketPlace.
+Please fill in the fields according to the information related to each VNFD (i.e., domain, vnf_id and identifier [alias] of the port):
 
 ```
 vnfds_conf = [ {'domain': 'UCL', 'id' : '4', 'port' : '99'},
@@ -15,8 +15,21 @@ ingress = 'SAP0'
 egress = 'SAP1'
 ```
 
-Finally specify the total number of instances the NSD should include, the VNFs will be randomly added to the generated service descriptor according to the information of the previous dict.
+Specify the total number of VNFs the NSD should include, the instances will randomly be referenced in the generated service descriptor according to the information of the previous dict.
 
 ```
-nf_instances = 100
+nf_instances = 30
+```
+
+Finally assign the name of the NSD file (it will also used as value of the name field in the descriptor itself)
+
+```
+service_name = '30Instances_NSD'
+```
+
+#### Service submission
+To actually submit the generated NSD to the 5GEx marketplace and purchase an instance of it, please use the script
+
+```
+# submit_service.sh <MdO IP> <NSD.json> <Service name in the NSD>
 ```
