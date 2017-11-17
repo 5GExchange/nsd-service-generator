@@ -1,5 +1,5 @@
 #### Usage
-Create a dict in the python script according to the VNFDs to be referenced in the NSD. Please note that the VNFDs have to already be onboarded in the MarketPlace.
+Create a list of dicts in the python script according to the VNFDs to be referenced in the NSD. Please note that the VNFDs have to already be onboarded in the MarketPlace.
 Please fill in the fields according to the information related to each VNFD (i.e., domain, vnf_id and identifier [alias] of the port):
 
 ```
@@ -15,7 +15,7 @@ ingress = 'SAP0'
 egress = 'SAP1'
 ```
 
-Specify the total number of VNFs the NSD should include, the instances will randomly be referenced in the generated service descriptor according to the information of the previous dict.
+Specify the total number of VNFs the NSD should include, the instances will randomly be referenced in the generated service descriptor according to the information specified in the previous list of dicts.
 
 ```
 nf_instances = 30
@@ -33,3 +33,5 @@ To actually submit the generated NSD to the 5GEx marketplace and purchase an ins
 ```
 # submit_service.sh <MdO IP> <NSD.json> <Service name in the NSD>
 ```
+
+Please note that the script requires jq.
