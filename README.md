@@ -1,6 +1,6 @@
 #### Usage
 Create a list of dicts in the python script according to the VNFDs to be referenced in the NSD. Please note that the VNFDs have to already be onboarded in the MarketPlace.
-Please fill in the fields according to the information related to each VNFD (i.e., domain, vnf_id and identifier [alias] of the port):
+Please fill in the fields according to the information related to each VNFD (i.e., domain, vnf_id generated after the onbiarding process  and identifier [alias] of the port):
 
 ```
 vnfds_conf = [ {'domain': 'UCL', 'id' : '4', 'port' : '99'},
