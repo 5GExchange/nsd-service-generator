@@ -2,7 +2,7 @@
 
 #based on single domain vCDN test on the CI
 
-if [ "$#" -ne 3 ] ; then
+if [ "$#" -ne 2 ] ; then
 	echo "Missing parameters: "
 	echo "Usage $0 [MDO_IP] [NSD file]"
 	exit 1
