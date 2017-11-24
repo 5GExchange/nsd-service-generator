@@ -55,7 +55,7 @@ and edit the ESCAPE configuration file "adapters" value to look like this:
         "address": "0.0.0.0",
         "port": 9001,
         "timeout": 20,
-        "callback_url": "http://IP1/callback",
+        "callback_url": "http://IP1:9001/callback",
         "explicit_update": true
     }
 }
