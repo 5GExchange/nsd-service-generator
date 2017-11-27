@@ -73,7 +73,7 @@ and edit the ESCAPE configuration file "adapters" value to look like this:
     }
 }
 ```
-
+and now run `./deploy.sh -i` to create the images and containers.
 
 Clone the nsd-scaling repo to ontain the NSD files:
 ```bash
