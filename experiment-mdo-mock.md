@@ -8,7 +8,20 @@ we deploy the mdoP2.0.3 in VM1, and mock_do in VM2.
 ### mock_do setup
 Follow the steps in https://5gexgit.tmit.bme.hu/tusa/mock-orchestrator (ignore the  "Configure the MdO to work with it") and create a docker container of the mock_do running at your VM2.
 
-### MdO setup
+## Setup
+### mock_do setup
+First of all, you need to run the mock_do on your VM2.
+Clone the repo:
+```bash
+git clone git@5gexgit.tmit.bme.hu:tusa/mock-orchestrator.git
+```
+and build the docker image to run the mock_do as a container:
+```bash
+docker build -t mock_do .
+docker run -d -p 8889:8889 --name my_mock_do mock_do
+```
+
+### Escape setup and NSD test
 Log in VM1 and checkout to P2.0.3:
 ```bash
 git clone git@5gexgit.tmit.bme.hu:5gex/mdo.git
@@ -61,10 +74,8 @@ and edit the ESCAPE configuration file "adapters" value to look like this:
 }
 ```
 
-Now just execute `./deploy.sh` to start the MdO components and ESCAPE.
 
-## NSD scaling script
-Clone the repo running
+Clone the nsd-scaling repo to ontain the NSD files:
 ```bash
 git clone git@5gexgit.tmit.bme.hu:tusa/nsd-scaling.git
 ```
@@ -90,7 +101,8 @@ python scale_nsd.py
 ```
 and execute the test using:
 ```bash
-./submit_service.sh IP1 30Instances_NSD.json 30Instances_NSD
+./create_service.sh IP1 30Instances_NSD.json
+./instantiate_service.sh localhost 30Instances_NSD
 ```
 
 
