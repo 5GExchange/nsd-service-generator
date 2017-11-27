@@ -5,8 +5,6 @@ We'll use 2 machines here:
  * VM2: IP2
  
 we deploy the mdoP2.0.3 in VM1, and mock_do in VM2.
-### mock_do setup
-Follow the steps in https://5gexgit.tmit.bme.hu/tusa/mock-orchestrator (ignore the  "Configure the MdO to work with it") and create a docker container of the mock_do running at your VM2.
 
 ## Setup
 ### mock_do setup
@@ -14,10 +12,12 @@ First of all, you need to run the mock_do on your VM2.
 Clone the repo:
 ```bash
 git clone git@5gexgit.tmit.bme.hu:tusa/mock-orchestrator.git
+git submodule init
+git submodule update
 ```
 and build the docker image to run the mock_do as a container:
 ```bash
-docker build -t mock_do .
+sudo docker build --no-cache --rm -t mock_do .
 docker run -d -p 8889:8889 --name my_mock_do mock_do
 ```
 
@@ -26,7 +26,7 @@ Log in VM1 and checkout to P2.0.3:
 ```bash
 git clone git@5gexgit.tmit.bme.hu:5gex/mdo.git
 cd mdo
-git checkout P.2.0.3
+git checkout P2.0.3
 ```
 change your `.env` file to point P2.0.3 versions:
 ```bash
@@ -73,15 +73,20 @@ and edit the ESCAPE configuration file "adapters" value to look like this:
     }
 }
 ```
-and now run `./deploy.sh -i` to create the images and containers.
-
-Clone the nsd-scaling repo to ontain the NSD files:
+and now run `./deploy.sh -i` to create the images. Once the marketplace is
+deployed, we need to upload the VNFs of the NDS scaling test.
+First of all, clone the repo:
 ```bash
 git clone git@5gexgit.tmit.bme.hu:tusa/nsd-scaling.git
 ```
+
 and modify the VNFD JSON files (`fake_cache_vnfd.json` and `fake_firewall_vnfd.json`) to set their `domain` value to the `DOMAIN_ID` specified in the MdO `.env` file (in this example it is `"02"`).
 Set the `'domain'` value in the dictionaries contained in the `vnfds_conf` variable of file `scale_nsd.py` to the `DOMAIN_ID` value as well. 
 
+Now create the NSD using:
+```bash
+python scale_nsd.py
+```
 Copy the VNFD JSON files to the directory `marketplace` inside the Mdo repo, i.e.:
 ```text
 mdo
@@ -89,22 +94,18 @@ mdo
    |-fake_cache_vnfd.json
    |-fake_firewall_vnfd.json
 ```
+Now move to the mdo repo and upload the VNFs to the marketplace:
 
-and upload the VNFs to the marketplace executing this line inside the mdo repo:
 ```bash
 sudo docker-compose -f docker-compose.yml -f docker-compose.admin.yml run --rm marketplace-cli
 ```
 
-Now create the NSD using:
-```bash
-python scale_nsd.py
-```
-and execute the test using:
+Finally go back to the nsd-scaling repo and execute the test:
 ```bash
 ./create_service.sh IP1 30Instances_NSD.json
-./instantiate_service.sh localhost 30Instances_NSD
+./instantiate_service.sh IP1 30Instances_NSD
 ```
-
+changing `IP1` to be the IP address of VM1.
 
 
 
