@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import json
+import argparse
 import random
 
 
@@ -206,21 +207,31 @@ def generate_nsd(ns_name, vnfds, vnf_number, ingress, egress):
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='UNIFY Orchestrator for Docker')
+    parser.add_argument('-i', action='store', dest='ingress', type=str,
+                        default='SAP0', help='Ingress')
+    parser.add_argument('-e', action='store', dest='egress', type=str,
+                        default='SAP1', help='Egress')
+    parser.add_argument('-n', action='store', dest='instances', type=int,
+                        default='10', help='NF instances')
+    parser.add_argument('-s', action='store', dest='service_name', type=str,
+                        default='10Instances_NSD', help='Service name')
 
    #vnfds_conf = [ {'domain': 'UCL', 'id' : '4', 'port' : '99'},
    #               {'domain': 'UCL', 'id' : '5', 'port' : '99'},
    #               {'domain': 'UCL', 'id' : '6', 'port' : '54'} ]
-
-   vnfds_conf = [ {'domain': 'UCL', 'id' : '4', 'port' : '99'},
-                  {'domain': 'UCL', 'id' : '5', 'port' : '99'} ]
-
-   ingress = 'SAP0'
-   egress = 'SAP1'
-   nf_instances = 30
-   service_name = '30Instances_NSD'
-
-   vnfds = []
-   for vnfd in vnfds_conf:
-       vnfds.append({'vnfid' : 'domain#'+ vnfd['domain'] + ':vnf#' + vnfd['id'], 'port' : vnfd['port'], 'instances' : 0})
    
-   generate_nsd(service_name, vnfds, nf_instances, ingress + ':in', egress + ':out')
+    vnfds_conf = [ {'domain': '02', 'id' : '4', 'port' : '99'},
+                {'domain': '02', 'id' : '5', 'port' : '99'} ]
+
+    arg_results = parser.parse_args()
+    ingress = arg_results.ingress
+    egress = arg_results.egress
+    nf_instances = arg_results.instances
+    service_name = arg_results.service_name
+
+    vnfds = []
+    for vnfd in vnfds_conf:
+        vnfds.append({'vnfid' : 'domain#'+ vnfd['domain'] + ':vnf#' + vnfd['id'], 'port' : vnfd['port'], 'instances' : 0})
+   
+    generate_nsd(service_name, vnfds, nf_instances, ingress + ':in', egress + ':out')
